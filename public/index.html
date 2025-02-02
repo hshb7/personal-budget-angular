@@ -13,20 +13,24 @@
 
 <a href="#main" class="skip">Skip to content</a>
 
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/login.html">Login</a></li>
-            <li><a href="https://google.com">Google</a></li>
-        </ul>
-    </nav>
+    <!-- This is a Semantic HTML Change -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/login.html">Login</a></li>
+                <li><a href="https://google.com">Google</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <div class="hero">
         <h1>Personal Budget</h1>
         <h2>A personal-budget management app</h2>
     </div>
 
+    <!-- This is a Semantic HTML Change -->
     <main class="center" id="main">
 
         <div class="page-area">
@@ -63,14 +67,14 @@
                 </p>
             </article>
     
-            <article>
+            <section>
                 <h1>Stay on track</h1>
                 <p>
                     Do you know where you are spending your money? If you really stop to track it down,
                     you would get surprised! Proper budget management depends on real data... and this
                     app will help you with that!
                 </p>
-            </article>
+            </section>
     
             <article>
                 <h1>Alerts</h1>
@@ -87,13 +91,14 @@
                     because they know it is all good and accounted for.
                 </p>
             </article>
-    
-            <article>
+
+            <!-- This is a Semantic HTML Change -->
+            <section>
                 <h1>Chart</h1>
                 <p>
-                    <canvas id="myChart" width="400" height="400"></canvas>
+                    <canvas id="myChart" width="400" height="400" aria-label="Budget Chart" role="img"></canvas>
                 </p>
-            </article>
+            </section>
 
         </div>
 
