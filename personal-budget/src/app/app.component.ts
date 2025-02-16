@@ -5,11 +5,11 @@ import { HeroComponent } from "./hero/hero.component";
 import { FooterComponent } from "./footer/footer.component";
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { HttpClient } from '@angular/common/http'; // Import HttpClient
-
+import { ContactComponent } from './contact/contact.component';
 @Component({
   selector: 'pb-root',
   standalone: true,
-  imports: [RouterOutlet, MenuComponent, HeroComponent, FooterComponent, HttpClientModule], // Add HttpClientModule to the imports array
+  imports: [RouterOutlet, MenuComponent, HeroComponent, FooterComponent, HttpClientModule, ContactComponent], // Add HttpClientModule to the imports array
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

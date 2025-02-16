@@ -4,6 +4,7 @@ import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { P404Component } from './p404/p404.component';
 import { FooterComponent } from './footer/footer.component';
+import { ContactComponent } from './contact/contact.component';
 
 export const routes: Routes = [
 {
@@ -20,8 +21,13 @@ export const routes: Routes = [
     component: LoginComponent
 },
 {
+    path: 'contact',
+    component: ContactComponent
+},
+{
     path: '**',
     component: P404Component
-}
+},
+
 
 ];

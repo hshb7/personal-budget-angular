@@ -1,27 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { ArticleComponent } from '../article/article.component';
-
-interface BudgetItem {
-  budget: number;
-  title: string;
-}
-
-interface BudgetResponse {
-  data: {
-    myBudget: BudgetItem[];
-  };
-}
+import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
+import { DataService, BudgetItem } from '../data/data.service'; // Ensure BudgetItem is imported
 
 @Component({
   selector: 'pb-homepage',
   standalone: true,
-  imports:[ArticleComponent], // Add HttpClientModule to the imports array
+  imports: [ArticleComponent, BreadcrumbsComponent],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
 
   public dataSource = {
     datasets: [
@@ -40,21 +30,24 @@ export class HomepageComponent implements OnInit {
 
   private chart: Chart | undefined;
 
-  constructor(private http: HttpClient) { 
+  constructor(private dataService: DataService) { 
+    // Register Chart.js components
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:3000/budget').subscribe((res: any) => {
-      for (let i = 0; i < res.myBudget.length; i++) {
-        this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
-        this.dataSource.labels[i] = res.myBudget[i].title;
-       
-      }
+    this.dataService.fetchBudgetData().subscribe((budgetData: BudgetItem[]) => {
+      this.dataSource.datasets[0].data = budgetData.map(item => item.budget);
+      this.dataSource.labels = budgetData.map(item => item.title);
       this.createChart();
-  
-      console.log(res);
     });
+  }
+
+  ngOnDestroy(): void {
+    // Destroy the chart when the component is destroyed
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 
   createChart(): void {
@@ -62,7 +55,11 @@ export class HomepageComponent implements OnInit {
     if (chartElement) {
       const ctx = chartElement.getContext('2d');
       if (ctx) {
-        new Chart(ctx, {
+        // Destroy the previous chart instance if it exists
+        if (this.chart) {
+          this.chart.destroy();
+        }
+        this.chart = new Chart(ctx, {
           type: 'pie',
           data: this.dataSource
         });
